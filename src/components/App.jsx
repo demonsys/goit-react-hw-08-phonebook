@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ContactForm from './contactForm/ContactForm';
+import ContactForm from './contact-form/ContactForm';
 import Filter from './filter/Filter';
 import ContactList from './contact-list/ContactList';
 import { nanoid } from 'nanoid';
@@ -14,12 +14,16 @@ class App extends Component {
     ],
     filter: '',
   };
-  updateContacts = newContact => {
-    if (
-      this.state.contacts.filter(contact =>
-        newContact.name.includes(contact.name)
+  // check is contact is alreadry in list
+  isUnique = name => {
+    return (
+      this.state.contacts.filter(
+        contact => contact.name.toLocaleLowerCase() === name
       ).length === 0
-    ) {
+    );
+  };
+  updateContacts = newContact => {
+    if (this.isUnique(newContact.name)) {
       this.setState({
         contacts: [...this.state.contacts, { id: nanoid(5), ...newContact }],
       });
@@ -30,6 +34,11 @@ class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
+  filterContacts = () => {
+    return this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter)
+    );
+  };
   updateFilter = filter => {
     this.setState({ ...this.state, filter: filter });
   };
@@ -39,10 +48,9 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onChange={this.updateContacts} />
         <h2>Contacts</h2>
-        <Filter onChange={this.updateFilter} />
+        <Filter currentValue={this.state.filter} onChange={this.updateFilter} />
         <ContactList
-          contacts={this.state.contacts}
-          filter={this.state.filter}
+          contacts={this.filterContacts()}
           onDeleteContact={this.deleteContact}
         />
       </>
