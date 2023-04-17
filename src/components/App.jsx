@@ -18,7 +18,7 @@ class App extends Component {
   isUnique = name => {
     return (
       this.state.contacts.filter(
-        contact => contact.name.toLocaleLowerCase() === name
+        contact => contact.name.toLocaleLowerCase() === name.toLowerCase()
       ).length === 0
     );
   };
