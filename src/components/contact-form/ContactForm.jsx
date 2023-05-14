@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'store/contacts/selectors';
 import './ContactForm.module.css';
-import PropTypes from 'prop-types';
+import { addContact } from 'store/contacts/contactsSlice';
 
-const ContactForm = ({ onChange }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const updateState = event => {
     const { name, value } = event.currentTarget;
@@ -21,13 +25,28 @@ const ContactForm = ({ onChange }) => {
   };
   const onSubmit = event => {
     event.preventDefault();
-    onChange({ name, number });
+    updateContacts({ name, number });
     reset();
   };
   const reset = () => {
     setName('');
     setNumber('');
   };
+
+  // check is contact is alreadry in list
+  const isUnique = name => {
+    return (
+      contacts.filter(
+        contact => contact.name.toLocaleLowerCase() === name.toLowerCase()
+      ).length === 0
+    );
+  };
+  const updateContacts = newContact => {
+    if (isUnique(newContact.name)) {
+      dispatch(addContact(newContact));
+    } else alert(`${newContact.name} is already in contacts`);
+  };
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -60,7 +79,5 @@ const ContactForm = ({ onChange }) => {
     </>
   );
 };
-ContactForm.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
+
 export default ContactForm;

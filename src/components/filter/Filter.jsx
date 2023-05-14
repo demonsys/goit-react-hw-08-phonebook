@@ -1,7 +1,14 @@
-import PropTypes from 'prop-types';
-const Filter = ({ currentValue, onChange }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from 'store/filter/filterSlice';
+import { getFilter } from 'store/filter/selectors';
+
+const Filter = () => {
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+
   const onFilterChange = event => {
-    onChange(event.currentTarget.value.toLowerCase());
+    const filterValue = event.currentTarget.value.toLowerCase();
+    dispatch(setFilter(filterValue));
   };
   return (
     <label htmlFor="filter">
@@ -12,14 +19,11 @@ const Filter = ({ currentValue, onChange }) => {
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        value={currentValue}
+        value={filter}
         onChange={onFilterChange}
       />
     </label>
   );
 };
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  currentValue: PropTypes.string.isRequired,
-};
+
 export default Filter;
