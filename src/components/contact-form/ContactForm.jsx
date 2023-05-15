@@ -26,7 +26,6 @@ const ContactForm = () => {
   const onSubmit = event => {
     event.preventDefault();
     updateContacts({ name, number });
-    reset();
   };
   const reset = () => {
     setName('');
@@ -44,6 +43,7 @@ const ContactForm = () => {
   const updateContacts = newContact => {
     if (isUnique(newContact.name)) {
       dispatch(addContact(newContact));
+      reset();
     } else alert(`${newContact.name} is already in contacts`);
   };
 
