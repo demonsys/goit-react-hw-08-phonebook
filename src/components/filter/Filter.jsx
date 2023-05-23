@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from 'store/filter/filterSlice';
-import { getFilter } from 'store/filter/selectors';
+import { selectFilter } from 'store/filter/selectors';
 
 const Filter = () => {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const onFilterChange = event => {

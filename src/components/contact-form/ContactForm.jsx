@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from 'store/contacts/selectors';
+import { selectContacts } from 'store/contacts/selectors';
 import './ContactForm.module.css';
-import { addContact } from 'store/contacts/contactsSlice';
+import { addContact } from 'store/contacts/operations';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const [phone, setPhone] = useState('');
+  const { items: contacts } = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const updateState = event => {
@@ -16,8 +16,8 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'number':
-        setNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
       default:
         break;
@@ -25,11 +25,11 @@ const ContactForm = () => {
   };
   const onSubmit = event => {
     event.preventDefault();
-    updateContacts({ name, number });
+    updateContacts({ name, phone });
   };
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   // check is contact is alreadry in list
@@ -62,15 +62,15 @@ const ContactForm = () => {
             onChange={updateState}
           />
         </label>
-        <label htmlFor="number">
-          Number{' '}
+        <label htmlFor="phone">
+          phone{' '}
           <input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            title="Phone phone must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
             onChange={updateState}
           />
         </label>
