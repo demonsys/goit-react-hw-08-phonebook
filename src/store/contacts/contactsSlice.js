@@ -52,34 +52,35 @@ const contactsSlice = createSlice({
     //   state.error = action.payload;
     // },
   },
-  extraReducers: {
+  extraReducers: builder => {
     // fetchAllContacts
-    [fetchContacts.pending]: handlePending,
-    [fetchContacts.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.items = action.payload;
-      console.log('fulfilled');
-    },
-    [fetchContacts.rejected]: handleRejected,
-    // addNewContact
-    [addContact.pending]: handlePending,
-    [addContact.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.items.push(action.payload);
-      console.log(action.payload);
-    },
-    [addContact.rejected]: handleRejected,
-    // deleteContact
-    [deleteContact.pending]: handlePending,
-    [deleteContact.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      console.log(action.payload.id);
-      state.items = state.items.filter(item => item.id !== action.payload.id);
-    },
-    [deleteContact.rejected]: handleRejected,
+    builder
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload;
+        console.log('fulfilled');
+      })
+      .addCase(fetchContacts.rejected, handleRejected)
+      // addNewContact
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items.push(action.payload);
+        console.log(action.payload);
+      })
+      .addCase(addContact.rejected, handleRejected)
+      // deleteContact
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        console.log(action.payload.id);
+        state.items = state.items.filter(item => item.id !== action.payload.id);
+      })
+      .addCase(deleteContact.rejected, handleRejected);
   },
 });
 

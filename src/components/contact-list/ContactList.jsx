@@ -4,6 +4,7 @@ import { selectContacts } from 'store/contacts/selectors';
 import { selectFilter } from 'store/filter/selectors';
 import { useEffect } from 'react';
 import { fetchContacts, deleteContact } from 'store/contacts/operations';
+import Loader from 'components/loader/loader';
 
 const ContactList = () => {
   const { items: contacts, isLoading, error } = useSelector(selectContacts);
@@ -19,7 +20,8 @@ const ContactList = () => {
 
   return (
     <>
-      {isLoading && !error && <p>Loading contacts...</p>}
+      <div id="preloader" className={css.preloader + ' ' + css.visible}></div>
+      {isLoading && !error && <Loader />}
       {error && <p>{error}</p>}
       <ul className="contacts__list">
         {filterContacts.map(({ id, name, phone }) => (

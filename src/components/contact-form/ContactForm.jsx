@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts } from 'store/contacts/selectors';
 import './ContactForm.module.css';
@@ -9,6 +9,7 @@ const ContactForm = () => {
   const [phone, setPhone] = useState('');
   const { items: contacts } = useSelector(selectContacts);
   const dispatch = useDispatch();
+  const addBtn = useRef();
 
   const updateState = event => {
     const { name, value } = event.currentTarget;
@@ -42,7 +43,10 @@ const ContactForm = () => {
   };
   const updateContacts = newContact => {
     if (isUnique(newContact.name)) {
-      dispatch(addContact(newContact));
+      addBtn.current.disabled = true;
+      dispatch(addContact(newContact)).then(
+        r => (addBtn.current.disabled = false)
+      );
       reset();
     } else alert(`${newContact.name} is already in contacts`);
   };
@@ -74,7 +78,7 @@ const ContactForm = () => {
             onChange={updateState}
           />
         </label>
-        <button>Add contact</button>
+        <button ref={addBtn}>Add contact</button>
       </form>
     </>
   );
