@@ -1,18 +1,19 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { selectContacts } from 'store/contacts/selectors';
 import './ContactForm.css';
-import { useAddContactMutation } from 'store/RtkQuery/rtkQueryApiService';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'store/RtkQuery/rtkQueryApiService';
 import Spinner from 'components/spinner/Spinner';
 import { toast } from 'react-toastify';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const { items: contacts } = useSelector(selectContacts);
   const addBtn = useRef();
   const [addContact, { isLoading }] = useAddContactMutation();
 
+  const { data: contacts } = useGetContactsQuery();
   const updateState = event => {
     const { name, value } = event.currentTarget;
     switch (name) {

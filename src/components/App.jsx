@@ -2,6 +2,7 @@ import ContactForm from './contact-form/ContactForm';
 import Filter from './filter/Filter';
 import ContactList from './contact-list/ContactList';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (

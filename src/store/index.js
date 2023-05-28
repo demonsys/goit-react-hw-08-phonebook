@@ -1,35 +1,8 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import { persistedContactsReducer } from './contacts/contactsSlice';
-// import { filterReducer } from './filter/filterSlice';
-// import {
-//   persistStore,
-//   FLUSH,
-//   REHYDRATE,
-//   PAUSE,
-//   PERSIST,
-//   PURGE,
-//   REGISTER,
-// } from 'redux-persist';
-
-// export const store = configureStore({
-//   reducer: {
-//     contacts: persistedContactsReducer,
-//     filter: filterReducer,
-//   },
-//   middleware: getDefaultMiddleware =>
-//     getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//       },
-//     }),
-// });
-// export const persistor = persistStore(store);
-
 import { configureStore } from '@reduxjs/toolkit';
-import { persistedContactsReducer } from './contacts/contactsSlice';
+// import { persistedContactsReducer } from './contacts/contactsSlice';
+// import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { filterReducer } from './filter/filterSlice';
 import {
-  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -38,11 +11,19 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { contactsApi } from './RtkQuery/rtkQueryApiService';
-// import { persistStore } from 'redux-persist';
+
+// const persistConfig = {
+//   key: 'Phonebook',
+//   storage,
+// };
+
+// export const persistedContactsReducer = persistReducer(
+//   persistConfig,
+//   contactsApi.reducer
+// );
 
 export const store = configureStore({
   reducer: {
-    contacts: persistedContactsReducer,
     filter: filterReducer,
     [contactsApi.reducerPath]: contactsApi.reducer,
   },
@@ -55,4 +36,4 @@ export const store = configureStore({
     contactsApi.middleware,
   ],
 });
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
