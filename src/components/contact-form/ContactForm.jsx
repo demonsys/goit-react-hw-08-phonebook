@@ -1,15 +1,17 @@
 import { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectContacts } from 'store/contacts/selectors';
-import './ContactForm.module.css';
-import { addContact } from 'store/contacts/operations';
+import './ContactForm.css';
+import { useAddContactMutation } from 'store/RtkQuery/rtkQueryApiService';
+import Spinner from 'components/spinner/Spinner';
+import { toast } from 'react-toastify';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const { items: contacts } = useSelector(selectContacts);
-  const dispatch = useDispatch();
   const addBtn = useRef();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
   const updateState = event => {
     const { name, value } = event.currentTarget;
@@ -43,14 +45,14 @@ const ContactForm = () => {
   };
   const updateContacts = newContact => {
     if (isUnique(newContact.name)) {
-      addBtn.current.disabled = true;
-      dispatch(addContact(newContact)).then(
-        r => (addBtn.current.disabled = false)
-      );
-      reset();
+      addContact(newContact).then(r => {
+        if (r.data) {
+          toast(`Contact '${r.data.name}' added successfully`);
+          reset();
+        }
+      });
     } else alert(`${newContact.name} is already in contacts`);
   };
-
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -78,7 +80,10 @@ const ContactForm = () => {
             onChange={updateState}
           />
         </label>
-        <button ref={addBtn}>Add contact</button>
+
+        <button ref={addBtn} disabled={isLoading} className="button_primary">
+          {isLoading ? <Spinner size="10px" /> : 'Add contact'}
+        </button>
       </form>
     </>
   );

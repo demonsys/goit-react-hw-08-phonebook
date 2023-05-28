@@ -7,7 +7,7 @@ const Filter = () => {
   const dispatch = useDispatch();
 
   const onFilterChange = event => {
-    const filterValue = event.currentTarget.value.toLowerCase();
+    const filterValue = event.currentTarget.value;
     dispatch(setFilter(filterValue));
   };
   return (
