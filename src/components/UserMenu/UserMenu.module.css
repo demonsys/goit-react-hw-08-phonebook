@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logout__btn {
+  /* margin-left: 10px; */
+}

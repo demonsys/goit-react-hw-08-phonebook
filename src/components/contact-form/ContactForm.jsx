@@ -1,17 +1,17 @@
-import { useState, useRef } from 'react';
-import './ContactForm.css';
+import { useState } from 'react';
+import css from '../common.module.css';
 import {
   useAddContactMutation,
   useGetContactsQuery,
 } from 'store/RtkQuery/rtkQueryApiService';
 import Spinner from 'components/spinner/Spinner';
 import { toast } from 'react-toastify';
+import randomNames from './randomNames';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const addBtn = useRef();
-  const [addContact, { isLoading }] = useAddContactMutation();
+  const [number, setNumber] = useState('');
+  const [addContact, { isLoading, error }] = useAddContactMutation();
 
   const { data: contacts } = useGetContactsQuery();
   const updateState = event => {
@@ -20,8 +20,8 @@ const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
       default:
         break;
@@ -29,11 +29,11 @@ const ContactForm = () => {
   };
   const onSubmit = event => {
     event.preventDefault();
-    updateContacts({ name, phone });
+    updateContacts({ name, number });
   };
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   // check is contact is alreadry in list
@@ -56,7 +56,7 @@ const ContactForm = () => {
   };
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form className={css.form} onSubmit={onSubmit}>
         <label htmlFor="name">
           Name
           <input
@@ -67,24 +67,38 @@ const ContactForm = () => {
             required
             value={name}
             onChange={updateState}
+            className={css.input}
           />
         </label>
-        <label htmlFor="phone">
-          phone{' '}
+        <label htmlFor="number">
+          Phone{' '}
           <input
             type="tel"
-            name="phone"
+            name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone phone must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={phone}
+            value={number}
             onChange={updateState}
+            className={css.input}
           />
         </label>
-
-        <button ref={addBtn} disabled={isLoading} className="button_primary">
+        <button type="submit" disabled={isLoading} className={css.btn}>
           {isLoading ? <Spinner size="10px" /> : 'Add contact'}
+        </button>{' '}
+        <button
+          disabled={isLoading}
+          className={css.btn}
+          onClick={() =>
+            updateContacts({
+              name: randomNames[Math.round(Math.random() * 49)],
+              number: Math.round(Math.random() * 9000000 + 10000000),
+            })
+          }
+        >
+          {isLoading ? <Spinner size="10px" /> : 'Add random contact'}
         </button>
+        {error && <p>{error.data.message}</p>}
       </form>
     </>
   );

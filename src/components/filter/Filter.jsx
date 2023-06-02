@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from 'store/filter/filterSlice';
 import { selectFilter } from 'store/filter/selectors';
+import common_css from '../common.module.css';
 
 const Filter = () => {
   const filter = useSelector(selectFilter);
@@ -21,6 +22,7 @@ const Filter = () => {
         required
         value={filter}
         onChange={onFilterChange}
+        className={common_css.input}
       />
     </label>
   );

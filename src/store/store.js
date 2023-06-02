@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { persistedContactsReducer } from './contacts/contactsSlice';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { filterReducer } from './filter/filterSlice';
 import {
@@ -13,21 +12,27 @@ import {
 import { contactsApi } from './RtkQuery/rtkQueryApiService';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
+import { authSliceReducer } from './auth/authSlice';
 
-const persistConfig = {
+const contactsPersistConfig = {
   key: 'Phonebook',
   storage,
 };
 
-export const persistedContactsReducer = persistReducer(
-  persistConfig,
-  contactsApi.reducer
-);
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
 
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
-    [contactsApi.reducerPath]: persistedContactsReducer,
+    auth: persistReducer(authPersistConfig, authSliceReducer),
+    [contactsApi.reducerPath]: persistReducer(
+      contactsPersistConfig,
+      contactsApi.reducer
+    ),
   },
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware({

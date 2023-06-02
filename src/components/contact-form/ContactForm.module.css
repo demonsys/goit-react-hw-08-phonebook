@@ -1,4 +1,4 @@
-.button__loader {
+/* .button__loader {
   display: inline-block;
   border: 5px solid #f3f3f3;
   animation: spin 1s linear infinite;
@@ -15,4 +15,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
