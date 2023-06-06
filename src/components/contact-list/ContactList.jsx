@@ -25,13 +25,9 @@ const ContactList = () => {
       )}
       {error && <p>{error.data.message}</p>}
       {contacts && (
-        <ul className="contacts__list">
+        <ul className={css.contacts__list}>
           {filterContacts.map(contact => (
-            <ContactItem
-              key={contact.id}
-              {...contact}
-              className={css.contacts__item}
-            />
+            <ContactItem key={contact.id} {...contact} />
           ))}
         </ul>
       )}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import css from '../common.module.css';
+import common_css from '../common.module.css';
+import css from './ContactForm.module.css';
 import {
   useAddContactMutation,
   useGetContactsQuery,
@@ -56,7 +57,7 @@ const ContactForm = () => {
   };
   return (
     <>
-      <form className={css.form} onSubmit={onSubmit}>
+      <form className={css.addContact_form} onSubmit={onSubmit}>
         <label htmlFor="name">
           Name
           <input
@@ -71,7 +72,7 @@ const ContactForm = () => {
           />
         </label>
         <label htmlFor="number">
-          Phone{' '}
+          Phone
           <input
             type="tel"
             name="number"
@@ -83,12 +84,12 @@ const ContactForm = () => {
             className={css.input}
           />
         </label>
-        <button type="submit" disabled={isLoading} className={css.btn}>
+        <button type="submit" disabled={isLoading} className={common_css.btn}>
           {isLoading ? <Spinner size="10px" /> : 'Add contact'}
-        </button>{' '}
+        </button>
         <button
           disabled={isLoading}
-          className={css.btn}
+          className={common_css.btn + ' ' + css.btn__random}
           onClick={() =>
             updateContacts({
               name: randomNames[Math.round(Math.random() * 49)],

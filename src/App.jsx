@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Container from './components/Container/Container';
 import AppBar from './components/AppBar/AppBar';
 import HomePage from './components/pages/HomePage';
-import ContactsPage from './components/pages/ContactsPage';
+import ContactsPage from './components/pages/ContactsPage/ContactsPage';
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
 import { useDispatch, useSelector } from 'react-redux';

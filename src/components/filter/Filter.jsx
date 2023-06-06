@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from 'store/filter/filterSlice';
 import { selectFilter } from 'store/filter/selectors';
-import common_css from '../common.module.css';
+import css from './Filter.module.css';
 
 const Filter = () => {
   const filter = useSelector(selectFilter);
@@ -12,8 +12,8 @@ const Filter = () => {
     dispatch(setFilter(filterValue));
   };
   return (
-    <label htmlFor="filter">
-      Find contacts by name
+    <label htmlFor="filter" className={css.filter_label}>
+      Find contact by name
       <input
         type="text"
         name="filter"
@@ -22,7 +22,7 @@ const Filter = () => {
         required
         value={filter}
         onChange={onFilterChange}
-        className={common_css.input}
+        className={css.filter}
       />
     </label>
   );

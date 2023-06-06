@@ -6,12 +6,12 @@ import userIcon from './user.png';
 import { logOut } from 'store/auth/auth-operations';
 
 const UserMenu = () => {
-  const userName = useSelector(authSelectors.selectUsername);
+  const userEmail = useSelector(authSelectors.selectUserEmail);
   const dispatch = useDispatch();
   return (
     <div className={css.container}>
       <img src={userIcon} alt="avatar" width="32" />
-      Hello {userName}.
+      {userEmail}
       <button
         type="button"
         className={commonCss.btn + ' ' + css.logout__btn}

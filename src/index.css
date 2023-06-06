@@ -7,8 +7,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  padding-left: 15px;
-  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  /* padding-left: 15px;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif; */
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 1.4rem;
+  background: whitesmoke;
 }
 
 code {
@@ -16,3 +19,30 @@ code {
     monospace;
 }
 
+p {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+input {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.52);
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  padding: 5px;
+}
+input:focus {
+  outline: 3px solid rgba(116, 180, 235, 0.8);
+}
+form {
+  width: 300px;
+  padding: 25px 15px;
+  border-radius: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.42);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 18px 0;
+}

@@ -1,0 +1,11 @@
+.outer_container {
+  display: flex;
+  gap: 150px;
+  justify-content: center;
+  font-size: medium;
+}
+/* .inner_container {
+} */
+.title {
+  text-align: center;
+}

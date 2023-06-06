@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import css from './AuthNav.module.css';
 import common from '../common.module.css';
 
 export default function AuthNav() {
@@ -11,7 +10,6 @@ export default function AuthNav() {
           common.nav__link + ' ' + (isActive ? common.active : '')
         }
       >
-        {' '}
         Register
       </NavLink>
       <NavLink
@@ -20,7 +18,6 @@ export default function AuthNav() {
           common.nav__link + ' ' + (isActive ? common.active : '')
         }
       >
-        {' '}
         Login page
       </NavLink>
     </div>
