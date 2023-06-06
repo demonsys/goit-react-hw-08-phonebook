@@ -6,8 +6,8 @@ import common from '../common.module.css';
 // import Spinner from 'components/spinner/Spinner';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('demonsys@gmail.com');
-  const [password, setPassword] = useState('1234567');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const onFormChange = event => {

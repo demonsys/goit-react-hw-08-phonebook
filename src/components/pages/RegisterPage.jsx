@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createNewUser } from 'store/auth/auth-operations';
 import common from '../common.module.css';
+import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -27,7 +28,9 @@ const RegisterPage = () => {
   };
   const onSubmit = event => {
     event.preventDefault();
-    dispatch(createNewUser({ name, email, password }));
+    dispatch(createNewUser({ name, email, password }))
+      .unwrap()
+      .catch(e => toast.error(e));
     // resetForm();
   };
   // const resetForm = () => {
@@ -54,7 +57,7 @@ const RegisterPage = () => {
           />
         </label>
         <label htmlFor="email">
-          email{' '}
+          email
           <input
             type="tel"
             name="email"
@@ -75,7 +78,6 @@ const RegisterPage = () => {
             className={common.input}
           />
         </label>
-
         <button
           type="submit"
           //   disabled={isLoading}
